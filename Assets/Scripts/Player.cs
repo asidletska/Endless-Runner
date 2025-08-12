@@ -4,9 +4,12 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float speed = 5;  // Швидкість гравця
     [SerializeField] private CharacterController characterController;   // Компонент для переміщення персонажу, не потребує Rigidbody
+    [SerializeField] private Animator animator;
     // Обмеження руху по координаті Х
     private float minX = -4f;
     private float maxX = 4f;
+
+    private bool isDead = false;
 
     private void Update()
     {
@@ -27,5 +30,11 @@ public class Player : MonoBehaviour
 
         // Ставимо обмежену позицію назад, для того щоб гравець міг переміщатись у нову точку
         transform.position = pos;
+    }
+
+    public void AnimationDead()
+    {
+        isDead = true;
+        animator.SetTrigger("Die");
     }
 }
