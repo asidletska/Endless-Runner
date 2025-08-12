@@ -1,18 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private float speed = 5;  // Швидкість гравця
+    [SerializeField] private CharacterController characterController;   // Компонент для переміщення персонажу, не потребує Rigidbody
+    // Обмеження руху по координаті Х
+    private float minX = -4f;
+    private float maxX = 4f;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        // Визначаємо натискання кнопок (A & D) або стрілки (вправо / вліво) і множимо на швидкість
+        float moveX = Input.GetAxis("Horizontal") * speed;
+
+        // Створюємо рух тільки по X
+        Vector3 move = new Vector3(moveX, 0, 0);
+
+        // Задаємо рух персонажа і множимо Time.deltatime, для того щоб швидкість руху була однаковою на будь якому FPS
+        characterController.Move(move * Time.deltaTime);
+
+        // Беремо поточну позицію гравця
+        Vector3 pos = transform.position;
+
+        // В класі Mathf беремо  метод  Clamp  для обмеження руху гравця по X, для того щоб не створювати зайві колайдери і щоб гравець не виходив за межі дороги
+        pos.x = Mathf.Clamp(pos.x, minX, maxX);
+
+        // Ставимо обмежену позицію назад, для того щоб гравець міг переміщатись у нову точку
+        transform.position = pos;
     }
 }
