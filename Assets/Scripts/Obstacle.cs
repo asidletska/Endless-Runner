@@ -9,6 +9,6 @@ public class Obstacle : MonoBehaviour
         // шукаємо об'єкт UIManager на сцені і викликаємо метод програшу
         FindObjectOfType<UIManager>().GameOver();
         // видаляємо об'єкт
-        Destroy(gameObject);
+       // Destroy(gameObject);
     }
 }
